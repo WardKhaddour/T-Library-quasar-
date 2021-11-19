@@ -1,7 +1,7 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
+  <q-layout view="lHh Lpr lFf" class="bg-img">
     <q-header>
-      <q-toolbar class="bg-grey-6">
+      <q-toolbar class="bg-grey-6 toolbar">
         <q-btn
           flat
           dense
@@ -11,8 +11,26 @@
           @click="toggleLeftDrawer"
         />
 
-        <q-toolbar-title> T Library </q-toolbar-title>
-        <user name="user name"></user>
+        <!-- <q-toolbar-title> T Library </q-toolbar-title> -->
+        <q-input
+          dark
+          dense
+          standout
+          v-model="searchText"
+          input-class="text-left"
+          class="q-ml-md"
+        >
+          <template v-slot:append>
+            <q-icon v-if="searchText === ''" name="search" @click="search" />
+            <q-icon
+              v-else
+              name="clear"
+              class="cursor-pointer"
+              @click="searchText = ''"
+            />
+          </template>
+        </q-input>
+        <user name="user name" class="user"></user>
       </q-toolbar>
     </q-header>
 
@@ -67,41 +85,25 @@ import EssentialLink from "components/EssentialLink.vue";
 import User from "components/User.vue";
 const linksList = [
   {
-    title: "Home",
-    // caption: 'quasar.dev',
+    title: "home",
     icon: "home",
-    // link: 'https://quasar.dev'
   },
   {
     title: "manage books",
-    // caption: 'github.com/quasarframework',
     icon: "library_books",
-    // link: 'https://github.com/quasarframework'
   },
   {
     title: "manage users",
-    // caption: 'chat.quasar.dev',
     icon: "people_outline",
-    // link: 'https://chat.quasar.dev'
   },
   {
     title: "requests",
-    // caption: 'forum.quasar.dev',
     icon: "request_quote",
-    // link: 'https://forum.quasar.dev'
   },
   {
     title: "library settings",
-    // caption: '@quasarframework',
     icon: "settings",
-    // link: 'https://twitter.quasar.dev'
   },
-  // {
-  //   title: "account settings",
-  //   // caption: '@QuasarFramework',
-  //   icon: "manage_accounts",
-  //   // link: 'https://facebook.quasar.dev'
-  // },
 ];
 
 import { defineComponent, ref } from "vue";
@@ -112,10 +114,9 @@ export default defineComponent({
     return {
       ass: {
         title: "account settings",
-        // caption: '@QuasarFramework',
         icon: "manage_accounts",
-        // link: 'https://facebook.quasar.dev'
       },
+      searchText: "",
       accoutSettingsOpen: false,
     };
   },
@@ -127,6 +128,7 @@ export default defineComponent({
     toggleAccountSettings() {
       this.accoutSettingsOpen = !this.accoutSettingsOpen;
     },
+    search() {},
   },
   setup() {
     const leftDrawerOpen = ref(false);
@@ -142,6 +144,23 @@ export default defineComponent({
 });
 </script>
 <style scoped>
+.bg-img {
+  background-image: url(../assets/background.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.bg-img::before {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  opacity: 0.8;
+  background-color: black;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
 .header {
   color: #fff;
   display: flex;
@@ -150,6 +169,13 @@ export default defineComponent({
   padding: 10px;
   column-gap: 10px;
   margin: 5% 2%;
+}
+.toolbar {
+  display: flex;
+  flex-direction: row;
+}
+.user {
+  margin-left: auto;
 }
 .arrow-icon {
   color: #fff;
@@ -184,6 +210,11 @@ export default defineComponent({
 .account-settings-item {
   margin: 2%;
 }
+/* .openSettings {
+  animation: open;
+  animation-duration: 2s;
+  animation-fill-mode: forwards;
+} */
 #sideNavBarTitle {
   margin: 3%;
   margin-bottom: 1%;
@@ -212,4 +243,14 @@ export default defineComponent({
     transform: rotate(360deg);
   }
 }
+/* @keyframes open {
+  from {
+    background-color: transparent;
+    height: 0%;
+  }
+  to {
+    background-color: black;
+    height: 100%;
+  }
+} */
 </style>

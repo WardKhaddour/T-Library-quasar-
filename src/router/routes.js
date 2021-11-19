@@ -1,15 +1,19 @@
+import MainLayout from "src/pages/HomeScreen.vue";
+import LoginForm from "src/pages/LoginScreen.vue";
+import Error404 from "pages/Error404.vue";
 const routes = [
   {
-    path: "/",
-    component: () => import("layouts/MainLayout.vue"),
-    children: [{ path: "", component: () => import("pages/Index.vue") }],
+    path: "/home",
+    component: MainLayout,
+    // children: [{ path: "", component: () => import("pages/Index.vue") }],
   },
-
-  // Always leave this as last one,
-  // but you can also remove it
+  {
+    path: "",
+    component: LoginForm,
+  },
   {
     path: "/:catchAll(.*)*",
-    component: () => import("pages/Error404.vue"),
+    component: Error404,
   },
 ];
 
